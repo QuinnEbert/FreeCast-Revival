@@ -1,4 +1,5 @@
 <?php
+require'./config.php';
 require'./includes/db.php';
 //this will be run as a cron!//
 //needs to be in the same dir as shoutcast//
@@ -33,16 +34,16 @@ system('./a.sh');
 $msg = 	"<pre><b>One Hour Until BroadCast</b>\n\n";
 $msg .= "Your time slot will be avaliable in <b>one hour</b> which (hopefully) means you should be preparing for your broadcast\n";
 $msg .= "If not, please do so!\n";
-$msg .= "The server address is: freecast.co.uk\n";
+$msg .= "The server address is: {$webHost}\n";
 $msg .= "The server port is: 8000\n";
 $msg .= "Your password is: ".$pass[$usr_h][$usr_d][$usr_m][$usr_y]."\n";
-$msg .= "The URL of your broadcast will be: http://freecast.co.uk:8000/listen.pls\n";
-$msg .= "You can check infromation on the broadcast here: http://freecast.co.uk:8000\n";
+$msg .= "The URL of your broadcast will be: http://{$webHost}:8000/listen.pls\n";
+$msg .= "You can check infromation on the broadcast here: http://{$webHost}:8000\n";
 $msg .= "\nIf you have a problem please join us on IRC at irc://irc.quakenet.org/#freecast\n";
-$msg .= "or our forums at http://board.freecast.co.uk\n";
+$msg .= "or our GitHub issue tracker at https://github.com/QuinnEbert/FreeCast-Revival/issues\n";
 $headers  = "MIME-Version: 1.0\r\n";
 $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-$headers .= "From:reminder@freecast.co.uk";
+$headers .= "From:reminder@{$msgHost}";
 mail($email, "Broadcast Reminder!", $msg, $headers);
 
 ?>

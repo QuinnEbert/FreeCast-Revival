@@ -1,6 +1,5 @@
-
-
 <?php
+require "config.php";
 if(!$_POST) { require "au.htm"; }
 elseif($_POST) {
 if(!$_POST['checkbox']) { die('You must agree with the <a href="?tos">Terms of Service</a> before registration can continue'); }
@@ -8,25 +7,6 @@ if(!$_POST['checkbox']) { die('You must agree with the <a href="?tos">Terms of S
 	else {
 	
 			if (!ereg("[A-Za-z0-9_-]+([\.]{1}[A-Za-z0-9_-]+)*@[A-Za-z0-9-]+([\.]{1}[A-Za-z0-9-]+)+", $_POST['email'])) { die( 'Your email address is invalid. Please enter a valid email address' ); }
-/*			elseif(strpos("hotmail.",$_POST['email'])) { echo 'Sorry we do not allow signups from that email provider.'; }
-			elseif(strpos("msn.",$_POST['email'])) { echo 'Sorry we do not allow signups from that email provider.'; }
-			elseif(strpos("yahoo.",$_POST['email'])) { echo 'Sorry we do not allow signups from that email provider.'; }
-			elseif(strpos("mailinator.com",$_POST['email'])) { echo 'Sorry we do not allow signups from that email provider.'; }
-			elseif(strpos("fastacura.com",$_POST['email'])) { echo 'Sorry we do not allow signups from that email provider.'; }
-			elseif(strpos("fastchevy.com",$_POST['email'])) { echo 'Sorry we do not allow signups from that email provider.'; }
-			elseif(strpos("fastchrysler.com",$_POST['email'])) { echo 'Sorry we do not allow signups from that email provider.'; }
-			elseif(strpos("fastkawasaki.com",$_POST['email'])) { echo 'Sorry we do not allow signups from that email provider.'; }
-			elseif(strpos("fastmazda.com",$_POST['email'])) { echo 'Sorry we do not allow signups from that email provider.'; }
-			elseif(strpos("fastmitsubishi.com",$_POST['email'])) { echo 'Sorry we do not allow signups from that email provider.'; }
-			elseif(strpos("fastnissan.com",$_POST['email'])) { echo 'Sorry we do not allow signups from that email provider.'; }
-			elseif(strpos("fastsubaru.com",$_POST['email'])) { echo 'Sorry we do not allow signups from that email provider.'; }
-			elseif(strpos("fastsuzuki.com",$_POST['email'])) { echo 'Sorry we do not allow signups from that email provider.'; }
-			elseif(strpos("fasttoyota.com",$_POST['email'])) { echo 'Sorry we do not allow signups from that email provider.'; }
-			elseif(strpos("fastyamaha.com",$_POST['email'])) { echo 'Sorry we do not allow signups from that email provider.'; }
-			elseif(strpos("dodgeit.com",$_POST['email'])) { echo 'Sorry we do not allow signups from that email provider.'; }
-			elseif(strpos("mailbucket.org",$_POST['email'])) { echo 'Sorry we do not allow signups from that email provider.'; }
-			elseif(strpos("lycos.com",$_POST['email'])) { echo 'Sorry we do not allow signups from that email provider.'; }
-*/			
 	//make password
 
 require './includes/db.php';
@@ -62,7 +42,7 @@ $sql = "INSERT INTO `user` ( `name` , `nick` , `pass` , `email` , `show` , `show
 if(mysql_query($sql)) { 
 echo "Your account has been added, an email has been sent to ".$_POST['email']." containing your login information."; 
 $msg = 	"<pre>Congratulations! An account has just been created for you at FreeCast Radio!\n\n";
-$msg .= "You can login here: <a href=\"http://freecast.co.uk/index.php?login\" target=\"_new\">http://freecast.co.uk/index.php?login</a>\n\n";
+$msg .= "You can login here: <a href=\"http://{$webHost}/index.php?login\" target=\"_new\">http://{$webHost}/index.php?login</a>\n\n";
 $msg .= "Your username is: ".$_POST['nick']."\n";
 $msg .= "And your password: $pass\n";
 $msg .= "<b>Please remember your password</b>\n\n";
@@ -74,7 +54,7 @@ $msg .= "The FreeCast Team.";
 
 $headers  = "MIME-Version: 1.0\r\n";
 $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-$headers .= "From:FreeCast Radio <Administrator@freecast.co.uk>";
+$headers .= "From:FreeCast Radio <Administrator@{$msgHost}>";
 mail($_POST['email'], "Your user account!", $msg, $headers);
 
 	}
