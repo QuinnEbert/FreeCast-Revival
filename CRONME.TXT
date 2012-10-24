@@ -1,0 +1,1 @@
+0 * * * * /usr/home/admin/shoutcast/shoutcast-1-9-4-freebsd4-elf/launch.sh

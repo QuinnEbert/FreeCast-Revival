@@ -1,0 +1,68 @@
+<?php
+@mysql_connect('localhost', 'mindweb_r4d10', 'dsfj2_124c');
+@mysql_select_db('mindweb_radio');
+if((!$_GET) && (!$_POST)) { 
+include('np.php');
+include('news.inc.php');
+}
+if(!defined('LOGGEDIN')) { echo ''; }
+else {
+	if($_POST['showedit']) {
+	$sql = "UPDATE `user` SET `show` = '".strip_tags(addslashes($_POST['showname']))."', `showdesc` = '".strip_tags(addslashes($_POST['showdesc']))."' WHERE `id` = '".stripslashes($_POST['id'])."'  LIMIT 1 ;";
+
+		@mysql_query($sql);
+			}
+	}
+if(isset($_GET['ss'])) {
+
+$sql = "SELECT `show`,`showdesc`,`id` FROM `user` WHERE `nick` = '".$_COOKIE['MindSlap_Radio_u']."' LIMIT 1";
+$result = @mysql_query($sql);
+$sn = strip_tags(@mysql_result($result,0,0));
+$sd = strip_tags(@mysql_result($result,0,1));
+$id = @mysql_result($result,0,2);
+echo"<br><table align=\"center\" width=\"500\" cellpadding=\"1\" bgcolor=\"#19785A\" cellspacing=\"0\"><tr><td><table width=\"100%\" bgcolor=\"#E1EBEC\"><tr><td align=\"center\"><div id=\"size13\">";
+echo"Amend your show information and your show name, these will be displayed<br> in public just before, and during your show.";
+echo"</div></td></tr></table></td></tr></table><br>";
+echo"<table align=\"center\" width=\"500\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"center\"><div id=\"size13\">";
+include('si.php');
+echo"</td></tr></table></div>";
+}
+
+elseif((isset($_GET['bo'])) || (isset($_GET['q'])) || (isset($_GET['unbook']))) {
+include('booking.php');
+}	
+elseif(isset($_GET['guide'])) {
+	include('g.htm');
+}
+
+elseif(isset($_GET['contact'])) {
+	include('c.htm');
+}
+
+elseif((isset($_GET['register'])) || (isset($_POST['register']))) {
+	include('adduser.php');
+}
+
+elseif(isset($_GET['tos'])) {
+	include('tos.htm');
+}
+
+elseif(isset($_GET['abo'])) {
+	include('ab.htm');
+}
+
+elseif((isset($_GET['rst'])) || (isset($_POST['pwrst']))) {
+	include('reset.php');
+}
+
+elseif((isset($_GET['pw'])) || (isset($_POST['pwrst2']))) {
+	include('newpw.php');
+}
+
+elseif((isset($_GET['taf'])) || (isset($_POST['taf']))) {
+	include('taf.php');
+}
+
+
+?>
+	
