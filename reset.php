@@ -1,6 +1,7 @@
 <?php
-@mysql_connect('localhost', 'mindweb_r4d10', 'dsfj2_124c');
-@mysql_select_db('mindweb_radio');
+require'./config.php';
+@mysql_connect($dbhost, $dbuser, $dbpass);
+@mysql_select_db($dbname);
 
 if(($_POST) AND (!$_POST['h'])) {	
 if($_POST['user']) {

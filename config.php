@@ -7,3 +7,9 @@
   $webHost = 'bobbyautodj.tbrnhost.com';
   // Domain name used in e-mail system addresses:
   $msgHost = 'bobbyautodj.tbrnhost.com';
+
+  // Database config:
+  $dbhost = 'localhost';
+  $dbuser = 'username';
+  $dbpass = 'password';
+  $dbname = 'database';

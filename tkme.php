@@ -8,8 +8,9 @@ This will cost you <b>0</b> slots.<br><br>
 <a href=?tk_me&yes>Yes</a>
 
 <?php } else { 
-mysql_connect('localhost', 'mindweb_r4d10', 'dsfj2_124c');
-mysql_select_db('mindweb_radio');
+require'./config.php';
+mysql_connect($dbhost, $dbuser, $dbpass);
+mysql_select_db($dbname);
 $usr_y = date('Y'); // 2004,2005,2006..
 $usr_m = date('m'); // 01,02,03..
 $usr_d = date('d'); // 01,02,03..
