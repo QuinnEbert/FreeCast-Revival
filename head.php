@@ -1,5 +1,5 @@
 	<br><div align="center">
-<img src="logo.gif" alt="Freecast.co.uk" align="middle">
+<img src="logo.gif" alt="bobbyautodj.tbrnhost.com" align="middle">
 </div><table bgcolor="#143B69" cellpadding="0" cellspacing="1" align="center" width="752">
 			<tr><td>
 		<table bgcolor="#19785A" cellpadding="0" cellspacing="0" align="center">
@@ -9,12 +9,11 @@
 	
 <?php
 
-echo "<div align=center><a href=\"http://freecast.co.uk:8000/listen.pls\"><b>Listen Now</b></a>";
+echo "<div align=center><a href=\"http://bobbyautodj.tbrnhost.com:8000/listen.pls\"><b>Listen Now</b></a>";
 echo "<div align=center><a href=?>Home</a>";
 echo "<a href=?guide>Guide</a>";
 echo "<a href=?contact>Contact</a>";
 echo "<a href=?abo>About</a>";
-//echo "<a href=http://board.freecast.co.uk>Forum</a>";
 
 if(cookiechk()) { //they are logged in!
 //update ip address//

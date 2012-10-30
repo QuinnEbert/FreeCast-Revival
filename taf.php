@@ -22,6 +22,7 @@ $valid[$i] = $email;
 if(isset($valid)) {
 
 unset($msg);
+require'./config.php';
 $msg .= "<pre>";
 $msg .= $_POST['msg'];
 $msg .= "\n";
@@ -34,12 +35,12 @@ $msg .= "They have used our Refer-A-Friend system to tell you about FreeCast.";
 $msg .= "FreeCast is a <b>Free</b> (as in without charge) \nservice which allows everyone and anyone to \nbroadcast their music or talk live, to the internet!\n";
 $msg .= "We allow new user sign ups 2 hours of FreeCasting per week.";
 $msg .= "It's all explain at our website\n If you think you might be interested, visit us at: ";
-$msg .= "<a href=\"http://freecast.co.uk\" target=\"_new\">http://www.FreeCast.co.uk</a>\n";
+$msg .= "<a href=\"http://{$webHost}\" target=\"_new\">http://{$webHost}</a>\n";
 $msg .= "Thanks Alot,\n";
 $msg .= "The FreeCast Team.\n";
 $headers  = "MIME-Version: 1.0\r\n";
 $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-$headers .= "From:FreeCast Radio <Administrator@freecast.co.uk>";
+$headers .= "From:FreeCast Radio <Administrator@{$msgHost}>";
 $title = "A FreeCast member thought you would like to know about our service!";
 
 foreach($valid as $sendto) {

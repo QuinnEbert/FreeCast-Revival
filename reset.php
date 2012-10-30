@@ -28,13 +28,14 @@ if($result = @mysql_query($sql))
 }
 echo 'An email with details on how to reset your password has been sent to the email provided';	
 mysql_query($sql);
+require'./config.php';
 $msg	 = "<pre><b>Password Reset</b>\r\n";
 $msg	 .= "You or Someone Else has requested that the password for your account be reset\r\n";
 $msg	 .= "To complete the reset process click this link:";
-$msg	 .= ' <a href="http://freecast.co.uk/reset.php?h='.$hash.'" target="_new">Reset My Password</a></pre>';
+$msg	 .= ' <a href="http://'.$webHost.'/reset.php?h='.$hash.'" target="_new">Reset My Password</a></pre>';
 $headers  = "MIME-Version: 1.0\r\n";
 $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-$headers .= "From:MindSlap Radio <reset@mindslap.co.uk>";
+$headers .= "From:MindSlap Radio <reset@{$msgHost}>";
 mail($email, "Password Reset!", $msg, $headers);
 }
 

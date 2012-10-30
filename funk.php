@@ -1,4 +1,5 @@
 <?php
+
 function check($username,$sha1) {
 $sql = "SELECT pass FROM `user` WHERE 1 AND `nick` = '".stripslashes($username)."' LIMIT 0 , 30";
 require'./includes/db.php';
@@ -12,9 +13,9 @@ else {
 }
 
 function cookie($username,$sha1) {
-
-	setcookie("MindSlap_Radio_u", $username, time()+99999999, "/", ".freecast.co.uk", 0);
-	setcookie("MindSlap_Radio_s", $sha1, time()+99999999, "/", ".freecast.co.uk", 0);
+	require'./config.php';
+	setcookie("MindSlap_Radio_u", $username, time()+99999999, "/", $webHost, 0);
+	setcookie("MindSlap_Radio_s", $sha1, time()+99999999, "/", $webHost, 0);
 	
 }
 
@@ -25,9 +26,9 @@ else {
 if(check($_COOKIE['MindSlap_Radio_u'],$_COOKIE['MindSlap_Radio_s'])) { DEFINE("LOGGEDIN","YES"); return TRUE; }
 }
 	}
-
+	require'./config.php';
 	function logout() {
-	setcookie("MindSlap_Radio_u", $username, time()-99999999, "/", ".freecast.co.uk", 0);
-	setcookie("MindSlap_Radio_s", $sha1, time()-99999999, "/", ".freecast.co.uk", 0);
+	setcookie("MindSlap_Radio_u", $username, time()-99999999, "/", $webHost, 0);
+	setcookie("MindSlap_Radio_s", $sha1, time()-99999999, "/", $webHost, 0);
 }
 	?>

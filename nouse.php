@@ -38,8 +38,8 @@ $parsed = parse_url($url);
 ///////////////
 
 require'./includes/db.php';
-
-$status = download("http://freecast.co.uk:8000/index.htm");
+require'./config.php';
+$status = download("http://$webHost:8000/index.htm");
 if(strpos($status,"Server is currently down.") !== FALSE) {
 
 	

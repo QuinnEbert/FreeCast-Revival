@@ -40,7 +40,7 @@ require "head.php";
 include("cont.php");
 ?>
 		</td><td width="200" valign="top" align="center">
-		<br><br><br><a href="http://www.mindslap.co.uk"><img src="ad.gif" alt="Mindslap Services" border="0"></a><br><br>
+		<br><br><br><a href="http://bobbyautodj.tbrnhost.com"><img src="ad.gif" alt="Mindslap Services" border="0"></a><br><br>
 		</td></tr></table>
 			</td></tr>
 		</table>
