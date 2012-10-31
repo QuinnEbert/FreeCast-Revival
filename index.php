@@ -1,20 +1,21 @@
 <?php
 require('funk.php');
 if(isset($_GET['logout'])) {
-logout();
-header("Location: index.php");
+	logout();
+	header("Location: index.php");
 }	
-if(($_POST['u']) AND ($_POST['p'])) {
-		if(check($_POST['u'],sha1($_POST['p']))) {
-			cookie($_POST['u'],sha1($_POST['p']));
-			header("Location: index.php");
 
-			}
-
-else { $msg = 'Username or Password Incorrect.'; }
-
+if(($_REQUEST['u']) AND ($_REQUEST['p'])) {
+	trigger_error("Unhashed pass was: ".$_REQUEST['p']);
+	if(check($_REQUEST['u'],sha1($_REQUEST['p']))) {
+		cookie($_REQUEST['u'],sha1($_REQUEST['p']));
+		header("Location: index.php");
+	} else {
+		$msg = 'Username or Password Incorrect.';
+	}
+} elseif (($_POST['u']) || ($_POST['p'])) {
+	$msg = 'Please fill in both the boxes.';
 }
-elseif(($_POST['u']) || ($_POST['p'])) { $msg = 'Please fill in both the boxes.'; }
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">

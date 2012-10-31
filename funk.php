@@ -1,15 +1,18 @@
 <?php
 
 function check($username,$sha1) {
-$sql = "SELECT pass FROM `user` WHERE 1 AND `nick` = '".stripslashes($username)."' LIMIT 0 , 30";
-require'./includes/db.php';
-$result = @mysql_query($sql);
-if(@mysql_result($result,0) == $sha1) {
-	return TRUE;
-}
-else {
-	return FALSE;
-}
+	require'./includes/db.php';
+	$sql = "SELECT pass FROM `user` WHERE `nick` = '".stripslashes($username)."' LIMIT 0 , 30";
+	$result = mysql_query($sql);
+	$pashed = mysql_result($result,0);
+	trigger_error("Hashed pass seen: ".$sha1." v. ".$pashed);
+	if($pashed == $sha1) {
+		trigger_error("Pass==OK");
+		return TRUE;
+	} else {
+		trigger_error("Pass==NO");
+		return FALSE;
+	}
 }
 
 function cookie($username,$sha1) {
