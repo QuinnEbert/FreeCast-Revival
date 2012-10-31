@@ -39,9 +39,9 @@ elseif(($_POST['u']) || ($_POST['p'])) { $msg = 'Please fill in both the boxes.'
 require "head.php";
 include("cont.php");
 ?>
-		</td><td width="200" valign="top" align="center">
-		<br><br><br><a href="http://bobbyautodj.tbrnhost.com"><img src="ad.gif" alt="Mindslap Services" border="0"></a><br><br>
-		</td></tr></table>
+		</td><td width="200" valign="middle" align="center">
+		<a href="http://bobbyautodj.tbrnhost.com">Our Service</a>
+		</td></tr><tr><td colspan="2" align="center" valign="middle"><br><br><br><a href="http://bobbyautodj.tbrnhost.com"><img src="ad.gif" alt="Mindslap Services" border="0" width="200"></a><br><br></tr></table>
 			</td></tr>
 		</table>
 			</td></tr>
