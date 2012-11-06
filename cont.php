@@ -4,9 +4,13 @@ if((!$_GET) && (!$_POST)) {
 include('np.php');
 include('news.inc.php');
 }
-if(!defined('LOGGEDIN')) { echo ''; }
-else {
+if (!defined('LOGGEDIN')) {
+	echo '';
+	trigger_error("Not gonna do anything...  This codebase blows chunks...");
+} else {
+	trigger_error("Trying to do something else...");
 	if($_POST['showedit']) {
+		trigger_error("Trying to edit the show...");
 	$sql = "UPDATE `user` SET 
 	`show` = '".strip_tags(addslashes($_POST['showname']))."', 
 	`allowemail` = '".strip_tags(addslashes($_POST['allowemail']))."', 
@@ -21,6 +25,7 @@ else {
 	WHERE `id` = '".stripslashes($_POST['id'])."'  LIMIT 1 ;";
 
 		@mysql_query($sql);
+		trigger_error("SQL status: ".@mysql_error());
 			}
 	}
 if(isset($_GET['ss'])) {
