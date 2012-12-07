@@ -50,6 +50,8 @@ echo '</td></tr></table></div>';
 unset($j);
 unset($hour_add);
 }	
+
+if (1==2) {
 ?>
 <br><form name="future" method="get" action="">
 <br><table align="center" width="500" cellpadding="1" bgcolor="#19785A" cellspacing="0"><tr><td><table width="100%" bgcolor="#E1EBEC"><tr><td align="center"><div id="size13">
@@ -59,4 +61,4 @@ unset($hour_add);
     <input name="show_days_in_future" type="text" size="2" value="<?php echo $days_to_show; ?>">
     <input type="submit" name="Submit" value="Go">
 
-</div></td></tr></table></td></tr></table><br> </form>
+</div></td></tr></table></td></tr></table><br> </form><?php } ?>

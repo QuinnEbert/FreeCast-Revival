@@ -10,10 +10,10 @@
 <?php
 
 echo "<div align=center><a href=\"http://bobbyautodj.tbrnhost.com:8000/listen.pls\"><b>Listen Now</b></a>";
-echo "<div align=center><a href=?>Home</a>";
-echo "<a href=?guide>Guide</a>";
-echo "<a href=?contact>Contact</a>";
-echo "<a href=?abo>About</a>";
+echo "<div align=center><a href=?>Home</a>&nbsp;";
+echo "<a href=?guide>Guide</a>&nbsp;";
+echo "<a href=?contact>Contact</a>&nbsp;";
+echo "<a href=?abo>About</a>&nbsp;";
 
 if(cookiechk()) { //they are logged in!
 //update ip address//
@@ -24,7 +24,7 @@ mysql_query($sql_query);
 echo "<a href=?logout><b>Logout</b></a>";
 }
 else {
-echo "<a href=?login><b>Login</b></a> <a href=?register><b>Register</b></a>";
+echo "<a href=?login><b>Login</b></a>&nbsp;<a href=?register><b>Register</b></a>";
 }
 
 
@@ -76,15 +76,15 @@ if(eregi("(msie) ([0-9]{1,2}.[0-9]{1,3})", $_SERVER['HTTP_USER_AGENT']))
 /* The next bit is layed out in a really... REALLY obvious way.
    Pay attantion boys and girls, this is where we throw shit about... */
 $wussat_then = detect_browser();
-if($wussat_then == "ie5") { echo "<font color=white>GMT&nbsp;<a class=clock href=\"javascript:scalewindow('counter.php','Counter','width=190,height=50,scrollbars=0,resizable=0,')\" title=\"Click to open Show Countdown Timer...\">"; }
-elseif($wussat_then == "ie6") { echo "<font color=white>GMT&nbsp;<a class=clock href=\"javascript:scalewindow('counter.php','Counter','width=190,height=50,scrollbars=0,resizable=0,')\" title=\"Click to open Show Countdown Timer...\">"; }
-else { echo "<font color=white>GMT&nbsp;"; }
+if($wussat_then == "ie5") { echo "<font color=white><a class=clock href=\"javascript:scalewindow('counter.php','Counter','width=190,height=50,scrollbars=0,resizable=0,')\" title=\"Click to open Show Countdown Timer...\">"; }
+elseif($wussat_then == "ie6") { echo "<font color=white><a class=clock href=\"javascript:scalewindow('counter.php','Counter','width=190,height=50,scrollbars=0,resizable=0,')\" title=\"Click to open Show Countdown Timer...\">"; }
+else { echo "<font color=white>"; }
 // Should work for IE 5 and 6. The others will just get the time. can add Elseif's later for different browsers/works etc..
 // End ReduX c0de
 echo	date('H');
 echo	':';
-echo	date('i');
-echo	"  ";	
+echo	date('i A');
+echo	"&nbsp;".date('T');	
 echo	"</font>";
 	?></a>
 	</td></tr>

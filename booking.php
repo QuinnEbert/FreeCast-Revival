@@ -15,8 +15,8 @@ $byu = "by you!";
 //
 if(!isset($_COOKIE['MindSlap_Radio_u'])) { echo "You don't appear to be logged in"; }
 else {
-	require'date.php';
-    require'.includes/db.php';
+	require'./date.php';
+    require'./includes/db.php';
 
 	//get and calculate slots/slots remaining from database//
 	$result = mysql_query("SELECT `email`,`slots` FROM `user` WHERE `nick` = '".$_COOKIE['MindSlap_Radio_u']."';");
@@ -146,15 +146,16 @@ else {
 		
 	}
 	echo"<br>";
-	echo"<table align=\"center\" width=\"500\" cellpadding=\"1\" bgcolor=\"#19785A\" cellspacing=\"0\"><tr><td><table width=\"100%\" bgcolor=\"#E1EBEC\"><tr><td align=\"center\"><div id=\"size13\">";
+	echo"<table align=\"center\" width=\"100%\" cellpadding=\"1\" bgcolor=\"#19785A\" cellspacing=\"0\"><tr><td><table width=\"100%\" bgcolor=\"#E1EBEC\"><tr><td align=\"center\"><div id=\"size13\">";
 	
 	echo "You have $left slot(s) left!<br>";
 	if(!isset($msg)) {
-		$msg = "To book a slot click on a green square below,<br> you are allowed a maximum of $max slots each week.";
+		$msg = "You are allowed a maximum of $max slots each week.";
 	}
 	echo"</div></td></tr></table></td></tr></table><br>";	
-	echo"<table align=\"center\" width=\"500\" cellpadding=\"1\" bgcolor=\"#19785A\" cellspacing=\"0\"><tr><td><table width=\"100%\" bgcolor=\"#E1EBEC\"><tr><td align=\"center\"><div id=\"size13\">";
-	echo $msg;
+	echo"<table align=\"center\" width=\"100%\" cellpadding=\"1\" bgcolor=\"#19785A\" cellspacing=\"0\"><tr><td><table width=\"100%\" bgcolor=\"#E1EBEC\"><tr><td align=\"center\"><div id=\"size13\">";
+	include('calendar.php');
+	/*echo $msg;*/
 	echo"</div></td></tr></table></td></tr></table>";	
 	
 

@@ -9,7 +9,4 @@
   $msgHost = 'bobbyautodj.tbrnhost.com';
 
   // Database config:
-  $dbhost = 'localhost';
-  $dbuser = 'username';
-  $dbpass = 'password';
-  $dbname = 'database';
+  require('includes/db.php');
