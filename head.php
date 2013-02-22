@@ -96,6 +96,7 @@ echo	"</font>";
 			echo '<a href=?pw>Edit Password</a>';
 			echo '<a href=?taf>Refer-A-Friend</a>';
 			echo '<a href=?bo><b>Book a Slot</b></a>';
+			echo '<a href=?ca><b>Credits Admin</b></a>';
 
 
 			echo '</div></td></tr></table>';
