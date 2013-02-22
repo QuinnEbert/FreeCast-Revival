@@ -1,4 +1,35 @@
 <?php
+
+  if (isset($_GET['slotFor'])&&isset($_GET['un'])) {
+	  $insBits = explode('-',$_GET['slotFor'],4);
+	  $n = mysql_real_escape_string($_GET['un']);
+	  $Y = $insBits[0];
+	  $m = $insBits[1];
+	  $d = $insBits[2];
+	  $H = $insBits[3];
+	  //FIXME: workaround stupid bug:
+	  if (!isset($_GET['ztUnbook'])) if ($Y!='0'&&$m!='0'&&$d!='0') mysql_query('INSERT INTO `slot` VALUES (\''.$n.'\','.$Y.','.$m.','.$d.','.$H.')');
+	  if (isset($_GET['ztUnbook'])) if ($Y!='0'&&$m!='0'&&$d!='0') mysql_query('DELETE FROM `slot` WHERE `year`='.$Y.' AND `month`='.$m.' AND `day`='.$d.' AND `hour`='.$H);
+  }
+
+  function get_gregorian_hour_name($H) {
+	  $hourNum = intval(strval(intval($H)));
+	  if ($hourNum===0)
+	  	return '12 AM';
+	  if ($hourNum===12)
+	  	return '12 PM';
+	  if ($hourNum<12)
+	  	return strval($hourNum).' AM';
+	  return strval((($hourNum)-12)).' PM';
+  }
+  function get_slot_for_hour($Y,$m,$d,$H)
+  {
+	  $results = mysql_query('SELECT * FROM `slot` a left join user b on a.nick=b.nick WHERE a.`year`='.strval(intval($Y)).' AND a.`month`='.strval(intval($m)).' and a.`day`='.strval(intval($d)).' and a.`hour`='.strval(intval($H)));
+	  if ($results === false) return false;
+	  if ( ! mysql_num_rows($results) ) return false;
+	  return mysql_fetch_assoc($results);
+  }
+
 //messages//
 $error = "Generic Error Message";
 $taken = "Sorry, that time slot is already taken";
@@ -148,119 +179,48 @@ else {
 	echo"<br>";
 	echo"<table align=\"center\" width=\"100%\" cellpadding=\"1\" bgcolor=\"#19785A\" cellspacing=\"0\"><tr><td><table width=\"100%\" bgcolor=\"#E1EBEC\"><tr><td align=\"center\"><div id=\"size13\">";
 	
-	echo "You have $left slot(s) left!<br>";
+	echo "Welcome &quot;".$_COOKIE['MindSlap_Radio_u']."&quot;!<br />You have $left slot(s) left!<br>";
 	if(!isset($msg)) {
 		$msg = "You are allowed a maximum of $max slots each week.";
 	}
 	echo"</div></td></tr></table></td></tr></table><br>";
 	echo"<table align=\"center\" width=\"100%\" cellpadding=\"1\" bgcolor=\"#19785A\" cellspacing=\"0\"><tr><td><table width=\"100%\" bgcolor=\"#E1EBEC\"><tr><td align=\"center\"><div id=\"size13\">";
 	
-	echo $_POST['sel_date']."<br>";
+	echo $_REQUEST['sel_date']."<br>";
 	if(!isset($msg)) {
 		$msg = "You are allowed a maximum of $max slots each week.";
 	}
 	echo"</div></td></tr></table></td></tr></table><br>";
 	echo"<table align=\"center\" width=\"100%\" cellpadding=\"1\" bgcolor=\"#19785A\" cellspacing=\"0\"><tr><td><table width=\"100%\" bgcolor=\"#E1EBEC\"><tr><td align=\"center\">";
 	?><table align="center" style="color: #000;" bgcolor="#E1EBEC" width="600" border="3" cellspacing="1" cellpadding="0">
-  <tr>
+  <!-- <tr>
     <td style="color: #FFF;" colspan="2" bgcolor="#19785A" align="center">February 15, 2013</td>
-  </tr>
+  </tr>  -->
+  <?php
+    $datePcs = explode('-',$_REQUEST['sel_date'],3);
+	$Y = $datePcs[0];
+	$m = $datePcs[1];
+	$d = $datePcs[2];
+  ?>
+  <?php for ($hourNum = 0; $hourNum < 24; $hourNum++) { ?>
   <tr>
-    <td width="20%" align="right">12 AM</td>
-    <td width="80%" align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
+    <td width="20%" align="right"><?php echo(get_gregorian_hour_name($hourNum)); ?></td>
+    <?php
+	$hourInf = get_slot_for_hour($Y,$m,$d,$hourNum);
+	if ($hourInf===false) {
+		$hourInf = '- NO SHOW SCHEDULED YET -<br /><strong><a style="color: #00F;" href="?bo2=action&sel_date='.$_REQUEST['sel_date'].'&slotFor='. strval(intval($Y)).'-'.strval(intval($m)).'-'.strval(intval($d)).'-'.strval(intval($hourNum)) .'&un='.$_COOKIE['MindSlap_Radio_u'].'">Click or tap to book slot!</a></strong>';
+	} else {
+		$showInf = '&quot;'.$hourInf['show'].'&quot; with '.$hourInf['name'].'<br />';
+		if ($hourInf['nick']==$_COOKIE['MindSlap_Radio_u']) {
+			$hourInf = $showInf.'<strong><a style="color: #00F;" href="?bo2=action&sel_date='.$_REQUEST['sel_date'].'&ztUnbook=OK&slotFor='. strval(intval($Y)).'-'.strval(intval($m)).'-'.strval(intval($d)).'-'.strval(intval($hourNum)) .'&un='.$_COOKIE['MindSlap_Radio_u'].'">Click or tap to unbook slot!</a></strong>';
+		} else {
+			$hourInf = $showInf.'<strong><em>You cannot unbook somebody else\'s time slot!</em></strong>';
+		}
+	}
+	?>
+    <td width="80%" align="center"><?php echo($hourInf); ?></td>
   </tr>
-  <tr>
-    <td align="right">1 AM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">2 AM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">3 AM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">4 AM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">5 AM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">6 AM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">7 AM</td>
-    <td align="center"><strong><em>&quot;The Gaming Show&quot; with DJ Zed</em></strong><br /><strong>Click or tap to unbook slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">8 AM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">9 AM</td>
-    <td align="center"><strong><em>&quot;The Test Show&quot; with DJ Random</em></strong><br /><strong style="color: #F00;">Cannot unbook/book another DJ's slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">10 AM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">11 AM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">12 PM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">1 PM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">2 PM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">3 PM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">4 PM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">5 PM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">6 PM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">7 PM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">8 PM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">9 PM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">10 PM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
-  <tr>
-    <td align="right">11 PM</td>
-    <td align="center">- NO SHOW SCHEDULED YET -<br /><strong>Click or tap to book slot!</strong></td>
-  </tr>
+  <?php } ?>
 </table><?php
 	/*echo $msg;*/
 	echo"</td></tr></table></td></tr></table>";	
