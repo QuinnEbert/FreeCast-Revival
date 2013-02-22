@@ -105,7 +105,7 @@ echo	"</font>";
 
 	</tr>
 	<tr><td bgcolor="#ffffff">
-	<table width="750"><tr><td valign="top" width="550">
+	<table width="750"><tr><td valign="top" width="100%">
 <?php
 
 if($msg == "")  {

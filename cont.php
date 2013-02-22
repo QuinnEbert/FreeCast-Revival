@@ -51,9 +51,16 @@ include('si.php');
 echo"</td></tr></table></div>";
 }
 
-elseif((isset($_GET['bo'])) || (isset($_GET['q'])) || (isset($_GET['unbook']))) {
+elseif((isset($_GET['bo'])) || (isset($_GET['bo2'])) || (isset($_GET['q'])) || (isset($_GET['unbook']))) {
+if (!isset($_GET['bo2'])) {
 include('booking.php');
+} else {
+include('booking2.php');
+}
 }	
+elseif(isset($_GET['ca'])) {
+	include('ca.php');
+}
 elseif(isset($_GET['guide'])) {
 	include('gm.htm');
 }
