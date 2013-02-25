@@ -7,6 +7,8 @@
   $webHost = 'bobbyautodj.tbrnhost.com';
   // Domain name used in e-mail system addresses:
   $msgHost = 'bobbyautodj.tbrnhost.com';
+  // Path to append to $webHost for welcome e-mail:
+  $subPath = '/freecast';
 
   // Database config:
   require('includes/db.php');

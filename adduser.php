@@ -42,7 +42,7 @@ $sql = "INSERT INTO `user` ( `name` , `nick` , `pass` , `email` , `show` , `show
 if(mysql_query($sql)) { 
 echo "Your account has been added, an email has been sent to ".$_POST['email']." containing your login information.<p />For immediate use, your new account password is:<p /><div style=\"background-color: #CCC;\"><pre>$pass</pre></div>"; 
 $msg = 	"<pre>Congratulations! An account has just been created for you at FreeCast Radio!\n\n";
-$msg .= "You can login here: <a href=\"http://{$webHost}/index.php?login\" target=\"_new\">http://{$webHost}/index.php?login</a>\n\n";
+$msg .= "You can login here: <a href=\"http://{$webHost}{$subPath}/index.php?login\" target=\"_new\">http://{$webHost}/index.php?login</a>\n\n";
 $msg .= "Your username is: ".$_POST['nick']."\n";
 $msg .= "And your password: $pass\n";
 $msg .= "<b>Please remember your password</b>\n\n";
