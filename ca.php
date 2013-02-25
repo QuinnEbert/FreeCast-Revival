@@ -31,11 +31,11 @@ if ($results === false) {
 
 <table width="85%" align="center" border="1" cellspacing="1" cellpadding="4">
 <tr>
-<td align="center" valign="middle" width="15%" bgcolor="#19785A"><strong>Nickname</strong></td>
-<td align="center" valign="middle" width="15%" bgcolor="#19785A"><strong>Real&nbsp;Name</strong></td>
-<td align="center" valign="middle" bgcolor="#19785A"><strong>E-mail</strong></td>
-<td align="center" valign="middle" width="8%" bgcolor="#19785A"><strong>Slots</strong></td>
-<td align="left" valign="middle" width="15%" bgcolor="#19785A"><strong>Action</strong></td>
+<td align="center" valign="middle" width="15%" bgcolor="#19785A" style="color: #FFF;"><strong>Nickname</strong></td>
+<td align="center" valign="middle" width="15%" bgcolor="#19785A" style="color: #FFF;"><strong>Real&nbsp;Name</strong></td>
+<td align="center" valign="middle" bgcolor="#19785A" style="color: #FFF;"><strong>E-mail</strong></td>
+<td align="center" valign="middle" width="8%" bgcolor="#19785A" style="color: #FFF;"><strong>Slots</strong></td>
+<td align="left" valign="middle" width="15%" bgcolor="#19785A" style="color: #FFF;"><strong>Action</strong></td>
 </tr>
 <?php while ($currRow = mysql_fetch_assoc($results)) { ?>
 <tr>
@@ -52,13 +52,26 @@ if ($results === false) {
 </table>
 
 <p><em>Credits Automatic Reset Options:</em></p>
-<p style="color: #F00;"><em>Sorry, due to a bug, these options won't work until about February 28 2013.  I'm really sorry for the trouble.</em></p>
+<p style="color: #F00;"><em>
+<strong>Sorry, due to a bug, these options won't work until about February 28 2013.</strong><br />
+I'm really sorry for the trouble.
+</em></p>
 
 <table width="85%" align="center" border="1" cellspacing="1" cellpadding="4">
 <tr>
-<td align="center" valign="middle" width="15%" bgcolor="#19785A">
-Reset every <input type="text" name="reset_every_many_days" value="30" />days.<br />
-Give <input type="text" name="give_every_many_days" value="2" /> slots every time we reset.
+<td align="center" valign="middle" width="15%" bgcolor="#19785A" style="color: #FFF;">
+Credit Rules
+</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="15%">
+<p style="color: #F00;"><em>
+<strong>Coming in April 2013:</strong><br />
+Features to set per-user auto-credit options!
+</em></p>
+<p>Reset every <input type="text" name="reset_every_many_days" value="30" />days.<br />
+Give <input type="text" name="give_every_many_days" value="2" /> slots every time we reset.</p>
+<p><input type="submit" name="Save the auto-credit options!" value="Save the auto-credit options!" /></p>
 </td>
 </tr>
 </table>
