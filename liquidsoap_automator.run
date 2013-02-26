@@ -1,0 +1,16 @@
+#!/usr/local/bin/php
+<?php
+require_once(dirname(__FILE__).'/includes/db.php');
+if ($sql) {
+	$results = mysql_query('SELECT `password` FROM `host` WHERE `hostname`=\'localhost\'');
+	if ($results) {
+		if (mysql_num_rows($results)) {
+			$ourInfo = mysql_fetch_assoc($results);
+			if ($argv[1]==$ourInfo['password'])
+				die('true');
+		}
+	}
+	die('false');
+} else {
+	die('false');
+}
