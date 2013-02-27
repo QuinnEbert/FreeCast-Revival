@@ -26,5 +26,7 @@ def auth(user,password) =
   end
 end
 
-mySource = input.harbor(id='source',auth=auth,'/')
-output.shoutcast.lame(id='output',password='ChangeMe',host='9000',fallible=true,mksafe(mySource))
+myLiveDJ = input.harbor(id='source',buffer=2.,max=2.,auth=auth,'/')
+myAutoDJ = input.http('http://host:port/automation.ext')
+mySource = fallback(track_sensitive=false,[myLiveDJ,myAutoDJ])
+output.shoutcast.mp3(id='output',password='ChangeMe',port=9000,fallible=true,mksafe(mySource))
