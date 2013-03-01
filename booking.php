@@ -1,4 +1,22 @@
 <?php
+
+  function mysql_get_user_slots($n) {
+	  $result = mysql_query('SELECT `slots` FROM `user` WHERE `nick`=\''.$n.'\'');
+	  $theRow = mysql_fetch_row($result);
+	  $thePts = explode('/',$theRow);
+	  return intval($thePts[0]);
+  }
+  function mysql_get_user_quota($n) {
+	  $result = mysql_query('SELECT `slots` FROM `user` WHERE `nick`=\''.$n.'\'');
+	  $theRow = mysql_fetch_row($result);
+	  $thePts = explode('/',$theRow);
+	  return intval($thePts[1]);
+  }
+  function mysql_set_user_slots($n,$s) {
+	  $result = mysql_query('UPDATE `user` SET `slots`=\''.$s.'/'.strval(mysql_get_user_quota($n)).'\' WHERE `nick`=\''.$n.'\'');
+  }
+
+
 //messages//
 $error = "Generic Error Message";
 $taken = "Sorry, that time slot is already taken";
@@ -147,6 +165,9 @@ else {
 	}
 	echo"<br>";
 	echo"<table align=\"center\" width=\"100%\" cellpadding=\"1\" bgcolor=\"#19785A\" cellspacing=\"0\"><tr><td><table width=\"100%\" bgcolor=\"#E1EBEC\"><tr><td align=\"center\"><div id=\"size13\">";
+	
+	$left = strval(mysql_get_user_quota($_COOKIE['MindSlap_Radio_u'])-mysql_get_user_slots($_COOKIE['MindSlap_Radio_u']));
+	$max = mysql_get_user_quota($_COOKIE['MindSlap_Radio_u']);
 	
 	echo "You have $left slot(s) left!<br>";
 	if(!isset($msg)) {

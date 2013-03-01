@@ -1,5 +1,21 @@
 <?php
 
+  function mysql_get_user_slots($n) {
+	  $result = mysql_query('SELECT `slots` FROM `user` WHERE `nick`=\''.$n.'\'');
+	  $theRow = mysql_fetch_row($result);
+	  $thePts = explode('/',$theRow);
+	  return intval($thePts[0]);
+  }
+  function mysql_get_user_quota($n) {
+	  $result = mysql_query('SELECT `slots` FROM `user` WHERE `nick`=\''.$n.'\'');
+	  $theRow = mysql_fetch_row($result);
+	  $thePts = explode('/',$theRow);
+	  return intval($thePts[1]);
+  }
+  function mysql_set_user_slots($n,$s) {
+	  $result = mysql_query('UPDATE `user` SET `slots`=\''.$s.'/'.strval(mysql_get_user_quota($n)).'\' WHERE `nick`=\''.$n.'\'');
+  }
+
   if (isset($_GET['slotFor'])&&isset($_GET['un'])) {
 	  $insBits = explode('-',$_GET['slotFor'],4);
 	  $n = mysql_real_escape_string($_GET['un']);
@@ -8,8 +24,18 @@
 	  $d = $insBits[2];
 	  $H = $insBits[3];
 	  //FIXME: workaround stupid bug:
-	  if (!isset($_GET['ztUnbook'])) if ($Y!='0'&&$m!='0'&&$d!='0') mysql_query('INSERT INTO `slot` VALUES (\''.$n.'\','.$Y.','.$m.','.$d.','.$H.')');
-	  if (isset($_GET['ztUnbook'])) if ($Y!='0'&&$m!='0'&&$d!='0') mysql_query('DELETE FROM `slot` WHERE `year`='.$Y.' AND `month`='.$m.' AND `day`='.$d.' AND `hour`='.$H);
+	  if (!isset($_GET['ztUnbook'])) {
+		  if ($Y!='0'&&$m!='0'&&$d!='0') {
+			  mysql_query('INSERT INTO `slot` VALUES (\''.$n.'\','.$Y.','.$m.','.$d.','.$H.')');
+			  mysql_set_user_slots($n,mysql_get_user_slots($n)-1);
+		  }
+	  }
+	  if (isset($_GET['ztUnbook'])) {
+		  if ($Y!='0'&&$m!='0'&&$d!='0') {
+			  mysql_query('DELETE FROM `slot` WHERE `year`='.$Y.' AND `month`='.$m.' AND `day`='.$d.' AND `hour`='.$H);
+			  mysql_set_user_slots($n,mysql_get_user_slots($n)+1);
+		  }
+	  }
   }
 
   function get_gregorian_hour_name($H) {
