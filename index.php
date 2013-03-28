@@ -1,4 +1,8 @@
 <?php
+
+ini_set('error_reporting',E_ALL);
+ini_set('display_errors',false);
+
 require('funk.php');
 if(isset($_GET['logout'])) {
 	logout();
@@ -40,9 +44,9 @@ if(($_REQUEST['u']) AND ($_REQUEST['p'])) {
 require "head.php";
 include("cont.php");
 ?>
-		</td><?php if (isset($_GET['ca'])==false&&isset($_GET['bo2'])==false&&isset($_GET['bo'])==false) { ?><td width="200" valign="middle" align="center">
+		</td><?php if (isset($_GET['ca'])==false&&isset($_GET['bo2'])==false&&isset($_GET['bo'])==false&&isset($_GET['abo'])==false) { ?><td width="200" valign="middle" align="center">
 		<a href="http://bobbyautodj.tbrnhost.com">Our Service</a>
-		</td><?php } ?></tr><tr><td<?php if (isset($_GET['ca'])==false&&isset($_GET['bo2'])==false&&isset($_GET['bo'])==false) { ?> colspan="2"<?php } ?> align="center" valign="middle"><br><br><br><a href="http://bobbyautodj.tbrnhost.com"><img src="ad.gif" alt="Mindslap Services" border="0" width="200"></a><br><br></tr></table>
+		</td><?php } ?></tr><tr><td<?php if (isset($_GET['ca'])==false&&isset($_GET['bo2'])==false&&isset($_GET['bo'])==false&&isset($_GET['abo'])==false) { ?> colspan="2"<?php } ?> align="center" valign="middle"><br><br><br><a href="http://bobbyautodj.tbrnhost.com"><img src="ad.gif" alt="Mindslap Services" border="0" width="200"></a><br><br></tr></table>
 			</td></tr>
 		</table>
 			</td></tr>
