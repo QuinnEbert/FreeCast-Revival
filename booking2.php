@@ -3,13 +3,13 @@
   function mysql_get_user_slots($n) {
 	  $result = mysql_query('SELECT `slots` FROM `user` WHERE `nick`=\''.$n.'\'');
 	  $theRow = mysql_fetch_row($result);
-	  $thePts = explode('/',$theRow);
+	  $thePts = explode('/',$theRow[0]);
 	  return intval($thePts[0]);
   }
   function mysql_get_user_quota($n) {
 	  $result = mysql_query('SELECT `slots` FROM `user` WHERE `nick`=\''.$n.'\'');
 	  $theRow = mysql_fetch_row($result);
-	  $thePts = explode('/',$theRow);
+	  $thePts = explode('/',$theRow[0]);
 	  return intval($thePts[1]);
   }
   function mysql_set_user_slots($n,$s) {
@@ -205,6 +205,9 @@ else {
 	echo"<br>";
 	echo"<table align=\"center\" width=\"100%\" cellpadding=\"1\" bgcolor=\"#19785A\" cellspacing=\"0\"><tr><td><table width=\"100%\" bgcolor=\"#E1EBEC\"><tr><td align=\"center\"><div id=\"size13\">";
 	
+	$left = strval(mysql_get_user_quota($_COOKIE['MindSlap_Radio_u'])-mysql_get_user_slots($_COOKIE['MindSlap_Radio_u']));
+	$max = mysql_get_user_quota($_COOKIE['MindSlap_Radio_u']);
+	
 	echo "Welcome &quot;".$_COOKIE['MindSlap_Radio_u']."&quot;!<br />You have $left slot(s) left!<br>";
 	if(!isset($msg)) {
 		$msg = "You are allowed a maximum of $max slots each week.";
@@ -234,10 +237,14 @@ else {
     <?php
 	$hourInf = get_slot_for_hour($Y,$m,$d,$hourNum);
 	if ($hourInf===false) {
-		$hourInf = '- NO SHOW SCHEDULED YET -<br /><strong><a style="color: #00F;" href="?bo2=action&sel_date='.$_REQUEST['sel_date'].'&slotFor='. strval(intval($Y)).'-'.strval(intval($m)).'-'.strval(intval($d)).'-'.strval(intval($hourNum)) .'&un='.$_COOKIE['MindSlap_Radio_u'].'">Click or tap to book slot!</a></strong>';
+		if (mysql_get_user_quota($_COOKIE['MindSlap_Radio_u'])>mysql_get_user_slots($_COOKIE['MindSlap_Radio_u'])) {
+			$hourInf = '- NO SHOW SCHEDULED YET -<br /><strong><a style="color: #00F;" href="?bo2=action&sel_date='.$_REQUEST['sel_date'].'&slotFor='. strval(intval($Y)).'-'.strval(intval($m)).'-'.strval(intval($d)).'-'.strval(intval($hourNum)) .'&un='.$_COOKIE['MindSlap_Radio_u'].'">Click or tap to book slot!</a></strong>';
+		} else {
+			$hourInf = $showInf.'<strong><em>You cannot book anymore slots!</em></strong>';
+		}
 	} else {
 		$showInf = '&quot;'.$hourInf['show'].'&quot; with '.$hourInf['name'].'<br />';
-		if ($hourInf['nick']==$_COOKIE['MindSlap_Radio_u'] && mysql_get_user_quota($_COOKIE['MindSlap_Radio_u'])!=mysql_get_user_slots($_COOKIE['MindSlap_Radio_u'])) {
+		/*if ($hourInf['nick']==$_COOKIE['MindSlap_Radio_u'] && mysql_get_user_quota($_COOKIE['MindSlap_Radio_u'])!=mysql_get_user_slots($_COOKIE['MindSlap_Radio_u'])) {
 			$hourInf = $showInf.'<strong><a style="color: #00F;" href="?bo2=action&sel_date='.$_REQUEST['sel_date'].'&ztUnbook=OK&slotFor='. strval(intval($Y)).'-'.strval(intval($m)).'-'.strval(intval($d)).'-'.strval(intval($hourNum)) .'&un='.$_COOKIE['MindSlap_Radio_u'].'">Click or tap to unbook slot!</a></strong>';
 		} else {
 			if (mysql_get_user_quota($_COOKIE['MindSlap_Radio_u'])!=mysql_get_user_slots($_COOKIE['MindSlap_Radio_u'])) {
@@ -245,6 +252,11 @@ else {
 			} else {
 				$hourInf = $showInf.'<strong><em>You cannot book anymore slots!</em></strong>';
 			}
+		}*/
+		if ($hourInf['nick']==$_COOKIE['MindSlap_Radio_u']) {
+			$hourInf = $showInf.'<strong><a style="color: #00F;" href="?bo2=action&sel_date='.$_REQUEST['sel_date'].'&ztUnbook=OK&slotFor='. strval(intval($Y)).'-'.strval(intval($m)).'-'.strval(intval($d)).'-'.strval(intval($hourNum)) .'&un='.$_COOKIE['MindSlap_Radio_u'].'">Click or tap to unbook slot!</a></strong>';
+		} else {
+			$hourInf = $showInf.'<strong><em>You cannot unbook somebody else\'s time slot!</em></strong>';
 		}
 	}
 	?>

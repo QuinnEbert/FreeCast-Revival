@@ -4,9 +4,9 @@
   // 24 October 2012
   
   // Web address used in links and cookies:
-  $webHost = 'bobbyautodj.tbrnhost.com';
+  $webHost = '192.168.1.16';
   // Domain name used in e-mail system addresses:
-  $msgHost = 'bobbyautodj.tbrnhost.com';
+  $msgHost = '192.168.1.16';
   // Path to append to $webHost for welcome e-mail:
   $subPath = '/freecast';
 
