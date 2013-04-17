@@ -27,13 +27,13 @@
 	  if (!isset($_GET['ztUnbook'])) {
 		  if ($Y!='0'&&$m!='0'&&$d!='0') {
 			  mysql_query('INSERT INTO `slot` VALUES (\''.$n.'\','.$Y.','.$m.','.$d.','.$H.')');
-			  mysql_set_user_slots($n,mysql_get_user_slots($n)-1);
+			  mysql_set_user_slots($n,mysql_get_user_slots($n)+1);
 		  }
 	  }
 	  if (isset($_GET['ztUnbook'])) {
 		  if ($Y!='0'&&$m!='0'&&$d!='0') {
 			  mysql_query('DELETE FROM `slot` WHERE `year`='.$Y.' AND `month`='.$m.' AND `day`='.$d.' AND `hour`='.$H);
-			  mysql_set_user_slots($n,mysql_get_user_slots($n)+1);
+			  mysql_set_user_slots($n,mysql_get_user_slots($n)-1);
 		  }
 	  }
   }
