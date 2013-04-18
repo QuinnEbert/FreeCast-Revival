@@ -6,24 +6,7 @@
 	  if ($results === false) return 'E';
 	  return strval(mysql_num_rows($results));
   }
-  
-  $numDays = intval(date('t',time()));
-  $weekNum = 0;
-  for ($i = 1 ; $i <= $numDays ; $i++) {
-    $thisDay = intval(date('w',mktime(0,0,0,intval(date('n',time())),$i,intval(date('Y',time())))));
-	if ($i > 1 && $thisDay == 0) $weekNum++;
-	$theDays[$weekNum][$thisDay] = $i;
-	if ($i == 1) {
-		for ($n = ($thisDay - 1) ; $n >= 0 ; $n--) {
-			$theDays[$weekNum][$n] = 0;
-		}
-	} elseif ($i == $numDays) {
-		for ($n = ($thisDay + 1) ; $n <= 6 ; $n++) {
-			$theDays[$weekNum][$n] = 0;
-		}
-	}
-  }
-  
+
   function get_month_by_num($monthNum) {
 	  $names = array(
 	  	'unused',
@@ -51,7 +34,33 @@
   if (isset($_GET['nnYear']))
     $Y = $_GET['nnYear'];
   $F = get_month_by_num($n);
+
   
+  $numDays = intval(date('t',mktime(0,0,0,intval($n),1,intval($Y))));
+  $weekNum = 0;
+  for ($i = 1 ; $i <= $numDays ; $i++) {
+    $thisDay = intval(date('w',mktime(0,0,0,intval(date('n',time())),$i,intval(date('Y',time())))));
+	if ($i > 1 && $thisDay == 0) $weekNum++;
+	$theDays[$weekNum][$thisDay] = $i;
+	if ($i == 1) {
+		for ($n = ($thisDay - 1) ; $n >= 0 ; $n--) {
+			$theDays[$weekNum][$n] = 0;
+		}
+	} elseif ($i == $numDays) {
+		for ($n = ($thisDay + 1) ; $n <= 6 ; $n++) {
+			$theDays[$weekNum][$n] = 0;
+		}
+	}
+  }
+  
+  $n = date('n',time());
+  $Y = date('Y',time());
+  if (isset($_GET['nnMnth']))
+    $n = $_GET['nnMnth'];
+  if (isset($_GET['nnYear']))
+    $Y = $_GET['nnYear'];
+  $F = get_month_by_num($n);
+
   $nxtYear = intval($Y);
   $nxtMnth = (intval($n)+1);
   if ($nxtMnth > 12) {
@@ -104,7 +113,7 @@
       if ($theDays[$x][$y]!=0) {
           echo(strval($theDays[$x][$y]));
 		  if ((date('F, Y',time())!="{$F}, {$Y}")||intval(strval($theDays[$x][$y]))>=intval(date('j'))) {
-              echo('<br />'.'<p align="center">'.get_num_day_slots(date('Y'),date('m'),$onDayNr).' Slots Booked</p><p align="center"><form method="POST" action="?bo2"><input type="hidden" name="sel_date" value="'.date('Y-m-').strval(str_pad($onDayNr,2,'0',STR_PAD_LEFT)).'" /><input type="submit" name="Book a Slot..." value="Book a Slot..." /></form></p>');
+              echo('<br />'.'<p align="center">'.get_num_day_slots($Y,$n,$onDayNr).' Slots Booked</p><p align="center"><form method="POST" action="?bo2"><input type="hidden" name="sel_date" value="'.strval(str_pad($Y,2,'0',STR_PAD_LEFT)).'-'.strval(str_pad($n,2,'0',STR_PAD_LEFT)).'-'.strval(str_pad($onDayNr,2,'0',STR_PAD_LEFT)).'" /><input type="submit" name="Book a Slot..." value="Book a Slot..." /></form></p>');
 		  } else {
 			  echo('<p style="color: #F00; font-style: italic; text-align: center;">this<br />day&nbsp;has<br />already&nbsp;passed</p>');
 		  }
