@@ -38,6 +38,11 @@ if(rand(1,5) != 1) {
 	}
 	else { $pass .= "_"; }
 	}
+if (isset($_POST['password'])) {
+	if (strlen($_POST['password'])) {
+		$pass = $_POST['password'];
+	}
+}
 $sql = "INSERT INTO `user` ( `name` , `nick` , `pass` , `email` , `show` , `showdesc`, `slots` ) VALUES ('".addslashes($_POST['name'])."', '".addslashes($_POST['nick'])."', '".sha1($pass)."', '".addslashes($_POST['email'])."', '".strip_tags(addslashes($_POST['showname']))."', '".strip_tags(addslashes($_POST['showdesc']))."', '0/2');";
 if(mysql_query($sql)) { 
 echo "Your account has been added, an email has been sent to ".$_POST['email']." containing your login information.<p />For immediate use, your new account password is:<p /><div style=\"background-color: #CCC;\"><pre>$pass</pre></div>"; 
